@@ -1,0 +1,21 @@
+.task-file {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task-file p {
+    font-size: 16px;
+}
+
+.task-file input {
+    display: block;
+}
+
+.task-solution-answer {
+    display: flex;
+}
+
+.task-solution-answer p:first-of-type {
+    margin-right: 20px;
+}
