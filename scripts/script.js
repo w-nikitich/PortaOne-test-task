@@ -74,51 +74,81 @@ function arithmeticMean(array) {
 }
 
 function maxChain(array) {
-    let maxChainArr = [];
+    let maxChainNumbers = [];
     let maxChainLength = 0;
+    let maxChainResults = [0];
+    let maxChainObj = new Object();
 
     array.forEach((number, index) => {
         if (number < array[index+1]) {
             maxChainLength++;
+            maxChainNumbers.push(number);
+
+            if (array[index+1] > array[index+2]) {
+                maxChainNumbers.push(array[index+1]);
+            }
+        }
+        else if (maxChainLength === 0) {
+            return;
+        }
+        else if ((array[index-1] < number) && (index === array.length-1)) {
+            maxChainNumbers.push(number);
+            maxChainObj[maxChainLength] = maxChainNumbers;
         }
         else {
-            maxChainArr.push(maxChainLength);
+            maxChainObj[maxChainLength] = maxChainNumbers;
             maxChainLength = 0;
-        };
-
-        // last
+            maxChainNumbers = [];
+        }
     })
 
-    maxChainArr.forEach(number => {
-        if (number > maxChainLength) {
-            maxChainLength = number;
+    Object.keys(maxChainObj).forEach((key) => {
+        if (key > maxChainResults[0]) {
+            maxChainResults[0] = key;
         }
-    });
+    })
 
-    maxchainNumberText.innerHTML = maxChainLength;
+    maxChainResults.push(maxChainObj[maxChainResults[0]])
+    maxchainNumberText.innerHTML = `${maxChainResults[0]} (${maxChainResults[1]})`
 }
 
 function minChain(array) {
-    let minChainArr = [];
+    let minChainNumbers = [];
     let minChainLength = 0;
+    let minChainResults = [0];
+    let minChainObj = new Object();
 
     array.forEach((number, index) => {
         if (number > array[index+1]) {
             minChainLength++;
+            minChainNumbers.push(number);
+
+            if (array[index+1] < array[index+2]) {
+                minChainNumbers.push(array[index+1]);
+            }
+        }
+        else if (minChainLength === 0) {
+            return;
+        }
+        else if ((array[index-1] > number) && (index === array.length-1)) {
+            minChainNumbers.push(number);
+            minChainObj[minChainLength] = minChainNumbers;
         }
         else {
-            minChainArr.push(minChainLength);
+            minChainObj[minChainLength] = minChainNumbers;
             minChainLength = 0;
-        };
+            minChainNumbers = [];
+        }
     })
 
-    minChainArr.forEach(number => {
-        if (number > minChainLength) {
-            minChainLength = number;
+    Object.keys(minChainObj).forEach((key) => {
+        if (key > minChainResults[0]) {
+            minChainResults[0] = key;
         }
-    });
-    
-    minchainNumberText.innerHTML = minChainLength;
+    })
+
+    minChainResults.push(minChainObj[minChainResults[0]])
+    minchainNumberText.innerHTML = `${minChainResults[0]} (${minChainResults[1]})`
 }
 
 input.addEventListener('change', () => {
